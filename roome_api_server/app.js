@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser')
 
 // 引入cors中间件，解决跨域问题。
 const cors = require('cors')
