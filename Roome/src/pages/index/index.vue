@@ -41,21 +41,38 @@ getHotCityList()
 
 const to = (e) => {
 	uni.navigateTo({
-		url: `/pages/hotel/hotelList?name=${e.name}`
+		url: `/pages/index/hotelList?name=${e.name}`
+	})
+}
+
+
+// 搜索 
+const uToast = ref(null)
+const keyword = ref('')
+const search = async () => {
+	if (!keyword.value)
+		return uToast.value.show({
+			type: 'error',
+			message: '请输入搜索内容',
+		})
+	uni.navigateTo({
+		url: `/pages/index/hotelList?name=${keyword.value.trim()}`
 	})
 }
 </script>
 
 <template>
 	<view class='index'>
+		<up-toast ref="uToast"></up-toast>
+
 		<image style="width: 100%;" :src="baseUrl + '/uploads/index/index_bg.png'" mode="widthFix" />
 		<view class='content'>
 			<view class="title">下一次你想去哪？</view>
 
 			<!-- 搜索框 -->
 			<view class="input">
-				<u--input placeholder="伦敦， 开普敦" prefixIcon="search" prefixIconStyle="font-size: 20px;color: #909399"
-					fontSize="25rpx"></u--input>
+				<u-input v-model="keyword" @confirm="search()" placeholder="伦敦， 开普敦" prefixIcon="search"
+					prefixIconStyle="font-size: 20px;color: #909399" fontSize="25rpx"></u-input>
 			</view>
 
 			<!-- 日期、房间选择 -->
@@ -73,7 +90,7 @@ const to = (e) => {
 
 			<!-- 搜索按钮 -->
 			<view class="btn">
-				<up-button color="#36CFC9" shape="circle" style="margin-bottom: 10rpx;">搜索酒店</up-button>
+				<up-button @click="search()" color="#36CFC9" shape="circle" style="margin-bottom: 10rpx;">搜索酒店</up-button>
 			</view>
 
 			<!-- 推荐 -->

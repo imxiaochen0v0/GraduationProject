@@ -22,9 +22,9 @@ onLoad(async (options) => {
 <template>
     <view>
         <view class="hotelList">
-            <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder fixed>
-            </u-navbar>
-            <u-empty mode="list" v-if="hotelList === undefined" style="margin-top: 100rpx;"></u-empty>
+            <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder fixed></u-navbar>
+
+            <u-empty mode="favor" text="该城市暂无酒店" v-if="hotelList === undefined"></u-empty>
             <uni-card padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
                 <image :src="baseUrl + item.img" mode="widthFix" />
                 <view class="hotelContent">
@@ -36,7 +36,7 @@ onLoad(async (options) => {
                         <view>
                             <view style="display: flex;">
                                 <u-icon name="map-fill" color="#36CFC9"></u-icon>
-                                <u-text :text="`距离${item.distance}km`" color="#aaa" size="12" margin="10rpx"></u-text>
+                                <u-text :text="`距离${item.distance}km`" color="#aaa" size="12"></u-text>
                             </view>
                             <u-rate readonly v-model="item.rate" :count="5" active-color="#36CFC9"></u-rate>
                         </view>
@@ -52,13 +52,16 @@ onLoad(async (options) => {
 </template>
 
 <style lang="scss" scoped>
+:deep(.u-empty) {
+    margin-top: 100rpx !important;
+}
+
 .hotelList {
     padding: 25rpx;
 
     :deep(.uni-card) {
         height: 240rpx;
-        padding-left: 0px !important;
-        padding-right: 0px !important;
+        padding: 0rpx !important;
         border-radius: 10px;
 
         .uni-card__content {

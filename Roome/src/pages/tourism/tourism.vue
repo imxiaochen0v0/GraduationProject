@@ -86,7 +86,6 @@ const payOrder = async () => {
 
     <u-navbar left-icon="" placeholder height="20px"></u-navbar>
     <view class="navbarTitle">我的旅行</view>
-    <u-loading-icon mode="circle" :show="loading" size="40"></u-loading-icon>
 
     <up-tabs :list="tabsList" @change="change" lineColor="#36CFC9" item-style="padding: 0; width: 33%; height: 75rpx"
       :active-style="{
@@ -94,6 +93,8 @@ const payOrder = async () => {
       fontWeight: '600',
       transform: 'scale(1.1)'
     }"></up-tabs>
+
+    <u-loading-icon mode="circle" :show="loading" size="40"></u-loading-icon>
 
     <view class="hotelList" v-if="!loading">
       <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;">
@@ -154,9 +155,7 @@ const payOrder = async () => {
 
 <style lang='scss' scoped>
 :deep(.u-loading-icon) {
-  position: absolute;
-  top: 30%;
-  left: 45%;
+  margin-top: 100rpx;
 }
 
 .navbarTitle {

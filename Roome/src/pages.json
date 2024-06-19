@@ -68,7 +68,7 @@
 			}
 		},
 		{
-			"path": "pages/hotel/hotelList",
+			"path": "pages/index/hotelList",
 			"style": {
 				"navigationBarTitleText": "changePassword",
 				"navigationStyle": "custom" // 设置为自定义导航栏样式
