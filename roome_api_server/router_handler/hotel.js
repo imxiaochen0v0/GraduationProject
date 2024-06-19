@@ -2,11 +2,11 @@ const db = require('../db/index')
 
 // 获取酒店列表
 exports.getHotels = (req, res) => {
-  let sql = 'select * from hotel where isLike = ? or cheap = ?'
+  let sql = 'select * from hotel where isLike = ? or cheap = ? or city = ? or id = ?'
   if (Object.keys(req.body).length === 0) {
     sql = 'select * from hotel'
   }
-  db.query(sql, [req.body.isLike, req.body.cheap], (err, result) => {
+  db.query(sql, [req.body.isLike, req.body.cheap, req.body.city, req.body.id], (err, result) => {
     if (err)
       return res.send({ code: 1, message: err.message })
     if (result.length === 0)
@@ -21,6 +21,9 @@ exports.getHotels = (req, res) => {
 
 // 喜欢 / 取消喜欢酒店
 exports.likeHotel = (req, res) => {
+  let isLike = parseInt(req.body.isLike)
+  if (isLike !== 0 && isLike !== 1)
+    return res.send({ code: 1, message: '参数错误' })
   let sql = 'update hotel set isLike = ? where id = ?'
   db.query(sql, [req.body.isLike, req.body.id], (err, result) => {
     if (err)
