@@ -12,6 +12,7 @@ const tabsList = ref([{
   name: '收藏'
 }])
 
+const loading = ref(false) // 加载状态
 const uToastRef = ref(null) // toast 组件实例
 // 获取酒店列表信息 
 const hotelList = ref([])
@@ -27,12 +28,15 @@ getHotelList('/hotel/orders', { status: 0 })
 const activeIndex = ref(0)
 const change = async ({ index }) => {
   activeIndex.value = index
+  loading.value = true
+  hotelList.value = []
   if (index === 0)
     await getHotelList('/hotel/orders', { status: 0 })
   if (index === 1)
     await getHotelList('/hotel/orders', { status: 1 })
   if (index === 2)
     await getHotelList('/hotel/list', { isLike: 0 })
+  loading.value = false
 }
 
 // 修改酒店收藏状态
@@ -82,6 +86,7 @@ const payOrder = async () => {
 
     <u-navbar left-icon="" placeholder height="20px"></u-navbar>
     <view class="navbarTitle">我的旅行</view>
+    <u-loading-icon mode="circle" :show="loading" size="40"></u-loading-icon>
 
     <up-tabs :list="tabsList" @change="change" lineColor="#36CFC9" item-style="padding: 0; width: 33%; height: 75rpx"
       :active-style="{
@@ -90,7 +95,7 @@ const payOrder = async () => {
       transform: 'scale(1.1)'
     }"></up-tabs>
 
-    <view class="hotelList">
+    <view class="hotelList" v-if="!loading">
       <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;">
       </u-empty>
       <view v-for="(item, index) in hotelList" :key="item.id">
@@ -148,6 +153,12 @@ const payOrder = async () => {
 </template>
 
 <style lang='scss' scoped>
+:deep(.u-loading-icon) {
+  position: absolute;
+  top: 30%;
+  left: 45%;
+}
+
 .navbarTitle {
   padding: 0 25rpx;
   font-size: 40rpx;
