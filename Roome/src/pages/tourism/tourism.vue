@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { http, baseUrl } from "../../utils/http"
+import { http, baseUrl } from "@/utils/http"
 
 const tabsList = ref([{
   name: '最近预定'
@@ -13,21 +13,20 @@ const tabsList = ref([{
 }])
 
 const uToastRef = ref(null) // toast 组件实例
-const hotelList = ref([])
 // 获取酒店列表信息 
+const hotelList = ref([])
 const getHotelList = async (url, data) => {
-  hotelList.value = []
   const res = await http(url, {
     method: 'POST',
     data
   })
   hotelList.value = res.data
+  console.log(hotelList.value);
 }
 getHotelList('/hotel/orders', { status: 0 })
 
 const activeIndex = ref(0)
 const change = async ({ index }) => {
-  console.log(index);
   activeIndex.value = index
   if (index === 0)
     await getHotelList('/hotel/orders', { status: 0 })
@@ -68,7 +67,7 @@ const payOrder = async () => {
     method: 'POST',
     data: {
       amount: orderInfo.value.price,
-      order_id:  orderInfo.value.id
+      order_id: orderInfo.value.id
     }
   })
   show.value = false
@@ -92,13 +91,13 @@ const payOrder = async () => {
 
     <up-tabs :list="tabsList" @change="change" lineColor="#36CFC9" item-style="padding: 0; width: 33%; height: 75rpx"
       :active-style="{
-      color: '#36CFC9',
-      fontWeight: '600',
-      transform: 'scale(1.1)'
-    }"></up-tabs>
+        color: '#36CFC9',
+        fontWeight: '600',
+        transform: 'scale(1.1)'
+      }"></up-tabs>
 
     <view class="hotelList">
-      <u-empty mode="order" v-if="!hotelList" style="margin-top: 100rpx;">
+      <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;">
       </u-empty>
       <view v-for="(item, index) in hotelList" :key="item.id">
         <uni-card padding="0" margin="10">
@@ -128,7 +127,8 @@ const payOrder = async () => {
               </view>
               <view v-else>
                 <u-text align="center" :text="`￥${item.price}`" bold color="#000"></u-text>
-                <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini" @click="open(item)"></up-button>
+                <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini"
+                  @click="open(item)"></up-button>
                 <u-text v-if="activeIndex === 1" align="center" text="支付成功" type="error" size="12" bold></u-text>
               </view>
             </view>
