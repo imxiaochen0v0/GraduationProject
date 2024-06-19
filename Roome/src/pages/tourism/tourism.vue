@@ -143,7 +143,7 @@ const payOrder = async () => {
           <up-cell style="padding:0 25rpx;" value="电子钱包" :border="false">
             <template #icon>付款方式</template>
           </up-cell>
-          <view style="padding:25rpx 200rpx;">
+          <view style="padding:0 200rpx;">
             <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" @click="payOrder()"></up-button>
           </view>
         </u-action-sheet>
