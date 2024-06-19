@@ -48,7 +48,7 @@ const to = (e) => {
 
 <template>
 	<view class='index'>
-		<image style="width: 100%;" src="../../static/img/index_bg.png" mode="widthFix" />
+		<image style="width: 100%;" :src="baseUrl + '/uploads/index/index_bg.png'" mode="widthFix" />
 		<view class='content'>
 			<view class="title">下一次你想去哪？</view>
 
@@ -81,8 +81,8 @@ const to = (e) => {
 				<view class="recommendTitle">推荐</view>
 
 				<scroll-view scroll-x="true" class="scroll-view_H">
-					<uni-card class="scroll-view-item_H" v-for="(item, index) in recommendCityList" :key="item.id"
-						margin="10rpx" padding="0" @click="to(item)">
+					<uni-card class="scroll-view-item_H" v-for="(item, index) in recommendCityList" :key="item.id" margin="10rpx"
+						padding="0" @click="to(item)">
 						<image src="../../static/img.png" mode="widthFix" />
 						<text>{{ item.name }}</text>
 					</uni-card>
@@ -94,8 +94,8 @@ const to = (e) => {
 				<view class="hotTitle">最受欢迎的旅游圣地</view>
 
 				<scroll-view scroll-x="true" class="scroll-view_H">
-					<uni-card class="scroll-view-item_H" v-for="(item, index) in hotCityList" :key="item.id"
-						margin="10rpx" padding="0" @click="to(item)">
+					<uni-card class="scroll-view-item_H" v-for="(item, index) in hotCityList" :key="item.id" margin="10rpx"
+						padding="0" @click="to(item)">
 						<image src="../../static/img2.png" mode="widthFix" />
 						<text>{{ item.name }}</text>
 					</uni-card>
@@ -116,8 +116,7 @@ const to = (e) => {
 							<view>
 								<view style="display: flex;">
 									<u-icon name="map-fill" color="#36CFC9"></u-icon>
-									<u-text :text="`距离${item.distance}km`" color="#aaa" size="12"
-										margin="10rpx"></u-text>
+									<u-text :text="`距离${item.distance}km`" color="#aaa" size="12" margin="10rpx"></u-text>
 								</view>
 								<u-rate readonly v-model="item.rate" :count="5" active-color="#36CFC9"></u-rate>
 							</view>
