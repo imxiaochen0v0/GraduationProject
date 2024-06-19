@@ -60,8 +60,11 @@ exports.getOrders = (req, res) => {
 
 // 获取城市列表
 exports.getCityList = (req, res) => {
-  let sql = 'select * from city'
-  db.query(sql, (err, result) => {
+  let sql = 'select * from city where isHot = ? or recommend = ?'
+  if (Object.keys(req.body).length === 0) {
+    sql = 'select * from hotel'
+  }
+  db.query(sql, [req.body.isHot, req.body.recommend], (err, result) => {
     if (err)
       return res.send({ code: 1, message: err.message })
     if (result.length === 0)

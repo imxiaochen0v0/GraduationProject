@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { http, baseUrl } from "../../utils/http"
 
-// 获取实惠酒店列表数据
+// 获取实惠酒店列表
 const hotelList = ref([])
 const getHotelList = async () => {
 	const res = await http('/hotel/list', {
@@ -14,6 +14,30 @@ const getHotelList = async () => {
 	hotelList.value = res.data
 }
 getHotelList()
+
+// 获取城市列表 API
+const getCityList = async (data) => {
+	return await http('/hotel/city', {
+		method: 'POST',
+		data
+	})
+}
+
+// 获取推荐城市
+const recommendCityList = ref([])
+const getRecommendCityList = async () => {
+	const res = await getCityList({ recommend: 0 })
+	recommendCityList.value = res.data
+}
+getRecommendCityList()
+
+// 获取热门城市	
+const hotCityList = ref([])
+const getHotCityList = async () => {
+	const res = await getCityList({ isHot: 0 })
+	hotCityList.value = res.data
+}
+getHotCityList()
 </script>
 
 <template>
@@ -51,13 +75,10 @@ getHotelList()
 				<view class="recommendTitle">推荐</view>
 
 				<scroll-view scroll-x="true" class="scroll-view_H">
-					<uni-card class="scroll-view-item_H" v-for="(item, index) in 5" :key="index" margin="10rpx" padding="0">
+					<uni-card class="scroll-view-item_H" v-for="(item, index) in recommendCityList" :key="item.id"
+						margin="10rpx" padding="0">
 						<image src="../../static/img.png" mode="widthFix" />
-						<view style="padding:0 25rpx;">
-							<u-text text="伦敦" bold></u-text>
-							<u-text text="1间 - 2人" size="10" line-height="15"></u-text>
-							<u-text text="12 - 22 3月" size="10" line-height="15"></u-text>
-						</view>
+						<text>{{ item.name }}</text>
 					</uni-card>
 				</scroll-view>
 			</view>
@@ -67,9 +88,10 @@ getHotelList()
 				<view class="hotTitle">最受欢迎的旅游圣地</view>
 
 				<scroll-view scroll-x="true" class="scroll-view_H">
-					<uni-card class="scroll-view-item_H" v-for="(item, index) in 5" :key="index" margin="10rpx" padding="0">
+					<uni-card class="scroll-view-item_H" v-for="(item, index) in hotCityList" :key="item.id"
+						margin="10rpx" padding="0">
 						<image src="../../static/img2.png" mode="widthFix" />
-						<text>夏威夷Hawaii</text>
+						<text>{{ item.name }}</text>
 					</uni-card>
 				</scroll-view>
 			</view>
@@ -88,7 +110,8 @@ getHotelList()
 							<view>
 								<view style="display: flex;">
 									<u-icon name="map-fill" color="#36CFC9"></u-icon>
-									<u-text :text="`距离${item.distance}km`" color="#aaa" size="12" margin="10rpx"></u-text>
+									<u-text :text="`距离${item.distance}km`" color="#aaa" size="12"
+										margin="10rpx"></u-text>
 								</view>
 								<u-rate readonly v-model="item.rate" :count="5" active-color="#36CFC9"></u-rate>
 							</view>
@@ -169,12 +192,21 @@ getHotelList()
 
 			:deep(.uni-card) {
 				width: 35vw;
+				height: 210rpx;
 				padding-left: 0px !important;
 				padding-right: 0px !important;
 				border-radius: 10px;
 
 				image {
 					width: 100%;
+				}
+
+				text {
+					position: absolute;
+					top: 70%;
+					left: 10%;
+					z-index: 10;
+					color: #fff;
 				}
 			}
 		}
