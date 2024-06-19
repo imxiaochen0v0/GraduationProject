@@ -57,3 +57,15 @@ exports.getOrders = (req, res) => {
     })
   })
 }
+
+// 获取城市列表
+exports.getCityList = (req, res) => {
+  let sql = 'select * from city'
+  db.query(sql, (err, result) => {
+    if (err)
+      return res.send({ code: 1, message: err.message })
+    if (result.length === 0)
+      return res.send({ code: 0, message: '城市不存在' })
+    res.send({ code: 0, message: '获取成功', data: result })
+  })
+}
