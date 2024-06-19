@@ -83,7 +83,7 @@ const to = (e) => {
 				<scroll-view scroll-x="true" class="scroll-view_H">
 					<uni-card class="scroll-view-item_H" v-for="(item, index) in recommendCityList" :key="item.id" margin="10rpx"
 						padding="0" @click="to(item)">
-						<image src="../../static/img.png" mode="widthFix" />
+						<image :src="baseUrl + item.img" mode="aspectFill" />
 						<text>{{ item.name }}</text>
 					</uni-card>
 				</scroll-view>
@@ -96,7 +96,7 @@ const to = (e) => {
 				<scroll-view scroll-x="true" class="scroll-view_H">
 					<uni-card class="scroll-view-item_H" v-for="(item, index) in hotCityList" :key="item.id" margin="10rpx"
 						padding="0" @click="to(item)">
-						<image src="../../static/img2.png" mode="widthFix" />
+						<image :src="baseUrl + item.img" mode="widthFix" />
 						<text>{{ item.name }}</text>
 					</uni-card>
 				</scroll-view>
