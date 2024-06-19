@@ -17,7 +17,6 @@ onLoad(async (options) => {
     hotelList.value = res.data
 })
 
-
 </script>
 
 <template>
