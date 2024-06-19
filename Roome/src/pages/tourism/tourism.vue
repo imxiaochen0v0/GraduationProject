@@ -21,7 +21,6 @@ const getHotelList = async (url, data) => {
     data
   })
   hotelList.value = res.data
-  console.log(hotelList.value);
 }
 getHotelList('/hotel/orders', { status: 0 })
 
@@ -45,11 +44,6 @@ const likeHotel = async (e, index) => {
       id: e.id,
       isLike: e.isLike
     }
-  })
-  uToastRef.value.show({
-    type: 'success',
-    message: e.isLike === 0 ? '喜欢成功' : '取消喜欢成功',
-    duration: 1000
   })
 }
 
@@ -102,7 +96,7 @@ const payOrder = async () => {
       <view v-for="(item, index) in hotelList" :key="item.id">
         <uni-card padding="0" margin="10">
           <u-button class="likeBtn" v-if="activeIndex === 2" type="error" shape="circle" :plain="item.isLike === 1"
-            icon="heart" @click="likeHotel(item, index)"></u-button>
+            icon="star" @click="likeHotel(item, index)"></u-button>
           <view v-else class="orderStatus">
             <u-text :text="activeIndex === 0 ? '预定中' : '已完成'" :color="activeIndex === 1 ? '#bbb' : '#36CFC9'"
               size="12"></u-text>
@@ -178,7 +172,6 @@ const payOrder = async () => {
       transition: all .3s ease-out;
 
       text {
-        margin-top: 4rpx !important;
         margin-right: 0.2px !important;
       }
     }
