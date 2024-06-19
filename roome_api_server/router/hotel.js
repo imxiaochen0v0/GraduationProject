@@ -6,6 +6,6 @@ const { getHotels, likeHotel, getOrders, getCityList } = require('../router_hand
 router.post('/list', getHotels)
 router.post('/like', likeHotel)
 router.post('/orders', getOrders)
-router.post('/city', getCityList)
+router.get('/city', getCityList)
 
 module.exports = router
