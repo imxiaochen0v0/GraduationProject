@@ -2,11 +2,11 @@ const db = require('../db/index')
 
 // 获取酒店列表
 exports.getHotels = (req, res) => {
-  let sql = 'select * from hotel where isLike = ? or cheap = ? or city = ? or id = ?'
+  let sql = 'select * from hotel where isLike = ? or cheap = ? or city = ?'
   if (Object.keys(req.body).length === 0) {
     sql = 'select * from hotel'
   }
-  db.query(sql, [req.body.isLike, req.body.cheap, req.body.city, req.body.id], (err, result) => {
+  db.query(sql, [req.body.isLike, req.body.cheap, req.body.city], (err, result) => {
     if (err)
       return res.send({ code: 1, message: err.message })
     if (result.length === 0)
