@@ -38,6 +38,12 @@ const getHotCityList = async () => {
 	hotCityList.value = res.data
 }
 getHotCityList()
+
+const to = (e) => {
+	uni.navigateTo({
+		url: `/pages/hotel/hotelList?name=${e.name}`
+	})
+}
 </script>
 
 <template>
@@ -76,7 +82,7 @@ getHotCityList()
 
 				<scroll-view scroll-x="true" class="scroll-view_H">
 					<uni-card class="scroll-view-item_H" v-for="(item, index) in recommendCityList" :key="item.id"
-						margin="10rpx" padding="0">
+						margin="10rpx" padding="0" @click="to(item)">
 						<image src="../../static/img.png" mode="widthFix" />
 						<text>{{ item.name }}</text>
 					</uni-card>
@@ -89,7 +95,7 @@ getHotCityList()
 
 				<scroll-view scroll-x="true" class="scroll-view_H">
 					<uni-card class="scroll-view-item_H" v-for="(item, index) in hotCityList" :key="item.id"
-						margin="10rpx" padding="0">
+						margin="10rpx" padding="0" @click="to(item)">
 						<image src="../../static/img2.png" mode="widthFix" />
 						<text>{{ item.name }}</text>
 					</uni-card>

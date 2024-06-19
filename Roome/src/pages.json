@@ -66,6 +66,13 @@
 				"navigationBarTitleText": "changePassword",
 				"navigationStyle": "custom" // 设置为自定义导航栏样式
 			}
+		},
+		{
+			"path": "pages/hotel/hotelList",
+			"style": {
+				"navigationBarTitleText": "changePassword",
+				"navigationStyle": "custom" // 设置为自定义导航栏样式
+			}
 		}
 	],
 	"globalStyle": {
