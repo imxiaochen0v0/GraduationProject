@@ -83,7 +83,7 @@ const to = (e) => {
 				<scroll-view scroll-x="true" class="scroll-view_H">
 					<uni-card class="scroll-view-item_H" v-for="(item, index) in recommendCityList" :key="item.id" margin="10rpx"
 						padding="0" @click="to(item)">
-						<image :src="baseUrl + item.img" mode="aspectFill" />
+						<image :src="baseUrl + item.img" mode="widthFix" />
 						<text>{{ item.name }}</text>
 					</uni-card>
 				</scroll-view>
@@ -197,7 +197,7 @@ const to = (e) => {
 
 			:deep(.uni-card) {
 				width: 35vw;
-				height: 210rpx;
+				height: 190rpx;
 				padding-left: 0px !important;
 				padding-right: 0px !important;
 				border-radius: 10px;
