@@ -3,7 +3,7 @@ const db = require('../db/index')
 // 支付接口
 exports.pay = (req, res) => {
   let sql = 'select amount from users where id = ?'
-  if (req.body.amount <= 0 || !req.body.order_id || Object.keys(req.body).length === 0) {
+  if (req.body.amount <= 0 && !req.body.order_id && Object.keys(req.body).length === 0) {
     return res.send({ code: 1, message: '参数错误' })
   }
   db.query(sql, [req.auth.id], (err, results) => {
