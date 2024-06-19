@@ -9,7 +9,7 @@ const tabsList = ref([{
   name: '已完成'
 },
 {
-  name: '喜欢'
+  name: '收藏'
 }])
 
 const uToastRef = ref(null) // toast 组件实例
@@ -35,7 +35,7 @@ const change = async ({ index }) => {
     await getHotelList('/hotel/list', { isLike: 0 })
 }
 
-// 修改酒店喜欢状态
+// 修改酒店收藏状态
 const likeHotel = async (e, index) => {
   hotelList.value[index].isLike = e.isLike === 0 ? 1 : 0
   await http('/hotel/like', {
@@ -85,18 +85,20 @@ const payOrder = async () => {
 
     <up-tabs :list="tabsList" @change="change" lineColor="#36CFC9" item-style="padding: 0; width: 33%; height: 75rpx"
       :active-style="{
-        color: '#36CFC9',
-        fontWeight: '600',
-        transform: 'scale(1.1)'
-      }"></up-tabs>
+      color: '#36CFC9',
+      fontWeight: '600',
+      transform: 'scale(1.1)'
+    }"></up-tabs>
 
     <view class="hotelList">
       <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;">
       </u-empty>
       <view v-for="(item, index) in hotelList" :key="item.id">
         <uni-card padding="0" margin="10">
-          <u-button class="likeBtn" v-if="activeIndex === 2" type="error" shape="circle" :plain="item.isLike === 1"
-            icon="star" @click="likeHotel(item, index)"></u-button>
+          <view v-if="activeIndex === 2" class="likeBtn">
+            <u-button type="error" shape="circle" :plain="item.isLike === 1" icon="star"
+              @click="likeHotel(item, index)"></u-button>
+          </view>
           <view v-else class="orderStatus">
             <u-text :text="activeIndex === 0 ? '预定中' : '已完成'" :color="activeIndex === 1 ? '#bbb' : '#36CFC9'"
               size="12"></u-text>
@@ -119,7 +121,7 @@ const payOrder = async () => {
                 <u-text :text="`￥${item.price}`" bold color="#000"></u-text>
                 <u-text text="/每晚" color="#000" size="12" align="center"></u-text>
               </view>
-              <view v-else>
+              <view v-else class="btn">
                 <u-text align="center" :text="`￥${item.price}`" bold color="#000"></u-text>
                 <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini"
                   @click="open(item)"></up-button>
@@ -169,12 +171,19 @@ const payOrder = async () => {
       top: 5%;
       width: 50rpx;
       height: 50rpx;
-      transition: all .3s ease-out;
 
-      text {
-        margin-right: 0.2px !important;
+      .u-button {
+        width: 50rpx;
+        height: 50rpx;
+        transition: all .3s ease-out;
+
+        text {
+          margin-right: 0.2px !important;
+        }
       }
     }
+
+
 
     .orderStatus {
       z-index: 99;

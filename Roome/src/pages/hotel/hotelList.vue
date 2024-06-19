@@ -1,23 +1,27 @@
 <script setup>
 import { ref } from "vue"
 import { http, baseUrl } from "@/utils/http"
+import { onLoad } from "@dcloudio/uni-app"
 
-const city = defineProps()
 const hotelList = ref([])
-const getHotelList = async () => {
+const city = ref({}) // 城市信息，用于导航栏显示
+// 获取城市名称，用于请求酒店列表数据
+onLoad(async (options) => {
+    city.value = options
     const res = await http('/hotel/list', {
         method: 'POST',
         data: {
-            city: city.name
+            city: options.name
         }
     })
     hotelList.value = res.data
-}
-getHotelList()
+})
+
+
 </script>
 
 <template>
-    <div>
+    <view>
         <view class="hotelList">
             <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder fixed>
             </u-navbar>
@@ -45,7 +49,7 @@ getHotelList()
                 </view>
             </uni-card>
         </view>
-    </div>
+    </view>
 </template>
 
 <style lang="scss" scoped>
