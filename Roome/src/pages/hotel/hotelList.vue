@@ -25,7 +25,7 @@ onLoad(async (options) => {
         <view class="hotelList">
             <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder fixed>
             </u-navbar>
-            <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;"></u-empty>
+            <u-empty mode="list" v-if="hotelList === undefined" style="margin-top: 100rpx;"></u-empty>
             <uni-card padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
                 <image :src="baseUrl + item.img" mode="widthFix" />
                 <view class="hotelContent">
