@@ -31,7 +31,7 @@ const quit = () => {
   <view class='user'>
     <u-navbar left-icon="" placeholder safe-area-inset-top height="20px"></u-navbar>
     <uni-card shadow="0 0 0 0" :border="false" isFull @click="to('info')" :title="userInfo.nickname || '未设置昵称'"
-      :sub-title="userInfo.username" :extra="'余额：' + userInfo.balance || 0" :thumbnail="baseUrl + userInfo.user_pic">
+      :sub-title="userInfo.username" :extra="'余额：' + userInfo.amount || 0" :thumbnail="baseUrl + userInfo.user_pic">
       <u-cell-group :border="false">
         <u-cell title="修改密码" @click="to('changePassword')">
           <template #value><u-icon name="lock" size="20"></u-icon></template>

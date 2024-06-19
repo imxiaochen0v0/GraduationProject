@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 
 // 获取用户信息
 exports.getUserInfo = (req, res) => {
-  const sql = 'select id, username, nickname, email, user_pic, phone from users where id = ?'
+  const sql = 'select id, username, nickname, email, user_pic, phone, amount  from users where id = ?'
   db.query(sql, [req.auth.id], (err, result) => {
     if (err)
       return res.send({ code: 1, message: err.message })

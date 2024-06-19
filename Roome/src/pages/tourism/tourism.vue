@@ -54,19 +54,21 @@ const likeHotel = async (e, index) => {
   })
 }
 
+// 打开 ActionSheet 弹层
 const show = ref(false)
-const open = () => {
+const open = (e) => {
+  orderInfo.value = e
   show.value = true
 }
 
 // 支付订单
-const payOrder = async (e) => {
-  console.log(e);
+const orderInfo = ref({})
+const payOrder = async () => {
   await http('/wallet/pay', {
     method: 'POST',
     data: {
-      amount: e.price,
-      order_id: e.id
+      amount: orderInfo.value.price,
+      order_id:  orderInfo.value.id
     }
   })
   show.value = false
@@ -78,7 +80,6 @@ const payOrder = async (e) => {
       getHotelList('/hotel/orders', { status: 0 })
     }
   })
-
 }
 </script>
 
@@ -127,7 +128,7 @@ const payOrder = async (e) => {
               </view>
               <view v-else>
                 <u-text align="center" :text="`￥${item.price}`" bold color="#000"></u-text>
-                <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini" @click="open"></up-button>
+                <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini" @click="open(item)"></up-button>
                 <u-text v-if="activeIndex === 1" align="center" text="支付成功" type="error" size="12" bold></u-text>
               </view>
             </view>
@@ -135,14 +136,14 @@ const payOrder = async (e) => {
         </uni-card>
         <u-action-sheet title="支付" :show="show" @close="show = false" round="10">
           <view style="display: flex;width: 200rpx;margin: 25rpx auto;">
-            <u-text align="center" text="￥" size="30" bold></u-text>
-            <u-text align="center" :text="`${item.price}`" size="40" bold></u-text>
+            <u-text align="center" text="￥" size="25" bold></u-text>
+            <u-text align="center" :text="`${orderInfo.price}`" size="35" bold></u-text>
           </view>
           <up-cell style="padding:0 25rpx;" value="电子钱包" :border="false">
             <template #icon>付款方式</template>
           </up-cell>
           <view style="padding:25rpx 200rpx;">
-            <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" @click="payOrder(item)"></up-button>
+            <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" @click="payOrder()"></up-button>
           </view>
         </u-action-sheet>
       </view>
