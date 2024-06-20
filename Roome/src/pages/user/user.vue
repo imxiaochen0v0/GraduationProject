@@ -25,7 +25,7 @@ const to = (link) => {
 const quit = () => {
   uni.removeStorageSync('token')
   uni.reLaunch({
-    url: '/pages/login/login'
+    url: '/pages/login/steer'
   })
 }
 </script>

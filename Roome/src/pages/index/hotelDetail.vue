@@ -98,7 +98,7 @@ const likeHotel = async () => {
 
     <!-- 收藏按钮 -->
     <view class="btn">
-      <u-button size="large" :type="hotelDetail.isLike === 0 ? 'error' : 'info'" icon="star" shape="circle"
+      <u-button size="large" :type="hotelDetail.isLike === 0 ? 'error' : 'info'" :plain="hotelDetail.isLike === 1" icon="star" shape="circle"
         @click="likeHotel()"></u-button>
     </view>
 
@@ -115,10 +115,11 @@ const likeHotel = async () => {
     right: 5%;
     width: 75rpx;
     height: 75rpx;
-
+    
     :deep(.u-button) {
       width: 75rpx;
       height: 75rpx;
+      transition: all .5s ease-out;
 
       text {
         top: -1rpx !important;

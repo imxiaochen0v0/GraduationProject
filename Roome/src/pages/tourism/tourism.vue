@@ -78,6 +78,13 @@ const payOrder = async () => {
     }
   })
 }
+
+const to = (e)=>{
+  uni.navigateTo({
+    url: `/pages/index/hotelDetail?id=${e.hotel_id}&name=${e.name}`,
+
+  })
+}
 </script>
 
 <template>
@@ -102,11 +109,11 @@ const payOrder = async () => {
       </u-empty>
 
       <view v-for="(item, index) in hotelList" :key="item.id">
-        <uni-card padding="0" margin="10">
+        <uni-card padding="0" margin="10" @tap="to(item)">
           <!-- 喜欢酒店按钮 -->
           <view v-if="activeIndex === 2" class="likeBtn">
-            <u-button type="error" shape="circle" :plain="item.isLike === 1" icon="star"
-              @click="likeHotel(item, index)"></u-button>
+            <u-button :type="item.isLike === 0?'error':'info'" shape="circle" :plain="item.isLike === 1" icon="star"
+              @tap.stop="likeHotel(item, index)"></u-button>
           </view>
 
           <!-- 订单状态 -->
@@ -146,7 +153,7 @@ const payOrder = async () => {
               <view v-else class="btn">
                 <u-text align="center" :text="`￥${item.price}`" bold color="#000"></u-text>
                 <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini"
-                  @click="open(item)"></up-button>
+                  @tap.stop="open(item)"></up-button>
                 <u-text v-if="activeIndex === 1" align="center" text="支付成功" type="error" size="12" bold></u-text>
               </view>
             </view>
@@ -208,7 +215,7 @@ const payOrder = async () => {
         transition: all .3s ease-out;
 
         text {
-          margin-right: 0 !important;
+          margin-right: .3px !important;
         }
       }
     }
