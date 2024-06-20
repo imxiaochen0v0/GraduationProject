@@ -5,6 +5,7 @@ import { http, baseUrl } from "@/utils/http"
 
 const hotel = ref({})
 const hotelDetail = ref({})
+// 获取酒店信息
 onLoad(async (options) => {
   hotel.value = options
   const res = await http('/hotel/list', {
@@ -30,19 +31,23 @@ const roomList = ref([{
   price: 0
 },])
 
+// 打开确定预订弹层
 const show = ref(false)
-const uToastRef = ref(null) // toast 组件实例
 const open = (e) => {
   hotelDetail.value.price = e.price
+  hotelDetail.value.type = e.type
   show.value = true
 }
 
+// 确定预订
+const uToastRef = ref(null) // toast 组件实例
 const confirm = async () => {
   await http('/hotel/updateOrder', {
     method: 'POST',
     data: {
       hotel_id: hotelDetail.value.id,
-      price: hotelDetail.value.price
+      price: hotelDetail.value.price,
+      type: hotelDetail.value.type
     }
   })
   show.value = false
@@ -52,6 +57,18 @@ const confirm = async () => {
     duration: 1000,
   })
 }
+
+// 修改酒店收藏状态
+const likeHotel = async () => {
+  await http('/hotel/like', {
+    method: 'POST',
+    data: {
+      id: hotelDetail.value.id,
+      isLike: hotelDetail.value.isLike === 0 ? 1 : 0
+    }
+  })
+  hotelDetail.value.isLike = hotelDetail.value.isLike === 0 ? 1 : 0
+}
 </script>
 
 <template>
@@ -59,12 +76,15 @@ const confirm = async () => {
 
     <up-toast ref="uToastRef" />
 
-    <u-navbar :title="hotel.name" :autoBack="true" safeAreaInsetTop placeholder></u-navbar>
+    <u-navbar :title="hotel.name" :autoBack="true" safeAreaInsetTop placeholder :fixed="false"></u-navbar>
+
+    <!-- 酒店图片 -->
     <view class="swiper">
       <u-swiper previous-margin="15" next-margin="15" height="200" bg-color="#fff"
         :list="[baseUrl + hotelDetail.img]"></u-swiper>
     </view>
 
+    <!-- 房间列表 -->
     <view class="card">
       <uni-card :cover="baseUrl + `/uploads/room/room${index + 1}.png`" margin="25px" v-for="(item, index) in  roomList"
         :key="index" :title="item.type" :extra="'￥' + item.price">
@@ -72,14 +92,40 @@ const confirm = async () => {
       </uni-card>
     </view>
 
-    <u-modal :show="show" title="预订" content='您确定要预订吗？' @close="show = false" closeOnClickOverlay
-      @confirm="confirm()"></u-modal>
+    <!-- 预订弹层 -->
+    <u-modal :show="show" title="预订" content='您确定要预订吗？' @close="show = false" closeOnClickOverlay @confirm="confirm()">
+    </u-modal>
+
+    <!-- 收藏按钮 -->
+    <view class="btn">
+      <u-button size="large" :type="hotelDetail.isLike === 0 ? 'error' : 'info'" icon="star" shape="circle"
+        @click="likeHotel()"></u-button>
+    </view>
+
   </view>
 </template>
 
 <style lang='scss' scoped>
 .container {
   padding-bottom: env(safe-area-inset-bottom);
+
+  .btn {
+    position: fixed;
+    top: 90%;
+    right: 5%;
+    width: 75rpx;
+    height: 75rpx;
+
+    :deep(.u-button) {
+      width: 75rpx;
+      height: 75rpx;
+
+      text {
+        top: -1rpx !important;
+        margin-right: 0 !important;
+      }
+    }
+  }
 
   .swiper {
     margin: 25rpx 0;
