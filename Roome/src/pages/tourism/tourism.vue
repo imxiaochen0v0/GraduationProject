@@ -100,10 +100,10 @@ const payOrder = async () => {
     <view class="hotelList" v-if="!loading">
       <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;">
       </u-empty>
-      
+
       <view v-for="(item, index) in hotelList" :key="item.id">
         <uni-card padding="0" margin="10">
-      <!-- 喜欢酒店按钮 -->
+          <!-- 喜欢酒店按钮 -->
           <view v-if="activeIndex === 2" class="likeBtn">
             <u-button type="error" shape="circle" :plain="item.isLike === 1" icon="star"
               @click="likeHotel(item, index)"></u-button>
@@ -130,8 +130,9 @@ const payOrder = async () => {
             <view class="hotelContentBottom">
               <view>
                 <view style="display: flex;">
-                  <u-icon :name="activeIndex===2?'map':'tags'" color="#36CFC9"></u-icon>
-                   <u-text v-if="activeIndex ===2" :text="`距离${item.distance}km`" color="#aaa" size="12" margin="10rpx"></u-text>
+                  <u-icon :name="activeIndex === 2 ? 'map' : 'tags'" color="#36CFC9"></u-icon>
+                  <u-text v-if="activeIndex === 2" :text="`距离${item.distance}km`" color="#aaa" size="12"
+                    margin="10rpx"></u-text>
                   <u-text v-else :text="item.type" color="#aaa" size="12" margin="10rpx"></u-text>
                 </view>
                 <u-rate readonly v-model="item.rate" :count="5" active-color="#36CFC9"></u-rate>
@@ -162,9 +163,9 @@ const payOrder = async () => {
           <up-cell style="padding:0 25rpx;" value="电子钱包" :border="false">
             <template #icon>付款方式</template>
           </up-cell>
-          
+
           <view style="padding:0 200rpx;">
-            <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" @click="payOrder()"></up-button>
+            <up-button text="支付" color="#36CFC9" @click="payOrder()"></up-button>
           </view>
         </u-action-sheet>
       </view>

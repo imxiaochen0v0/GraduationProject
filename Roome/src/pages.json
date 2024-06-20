@@ -80,6 +80,13 @@
 				"navigationBarTitleText": "hotelDetail",
 				"navigationStyle": "custom" // 设置为自定义导航栏样式
 			}
+		},
+		{
+			"path": "pages/user/recharge",
+			"style": {
+				"navigationBarTitleText": "recharge",
+				"navigationStyle": "custom" // 设置为自定义导航栏样式
+			}
 		}
 	],
 	"globalStyle": {
