@@ -28,7 +28,7 @@ const to = async (e) => {
 <template>
     <view class="container">
         <view class="hotelList">
-            <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder></u-navbar>
+            <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder :fixed="false"></u-navbar>
 
             <u-empty mode="favor" text="该城市暂无酒店" v-if="hotelList === undefined"></u-empty>
             <uni-card @click="to(item)" padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
