@@ -122,6 +122,7 @@ const search = async () => {
 			<!-- 最实惠的价格 -->
 			<view class="cheap">
 				<view class="cheapTitle">最实惠的价格</view>
+
 				<uni-card padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
 					<image :src="baseUrl + item.img" mode="widthFix" />
 					<view class="hotelContent">
@@ -129,6 +130,7 @@ const search = async () => {
 							<u-text :text="item.name" bold color="#000"></u-text>
 							<u-text :text="item.address" color="#aaa" size="12"></u-text>
 						</view>
+
 						<view class="hotelContentBottom">
 							<view>
 								<view style="display: flex;">
