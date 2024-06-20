@@ -96,37 +96,52 @@ const payOrder = async () => {
 
     <u-loading-icon mode="circle" :show="loading" size="40"></u-loading-icon>
 
+    <!-- 酒店列表 -->
     <view class="hotelList" v-if="!loading">
       <u-empty mode="order" v-if="hotelList === undefined" style="margin-top: 100rpx;">
       </u-empty>
+      
       <view v-for="(item, index) in hotelList" :key="item.id">
         <uni-card padding="0" margin="10">
+      <!-- 喜欢酒店按钮 -->
           <view v-if="activeIndex === 2" class="likeBtn">
             <u-button type="error" shape="circle" :plain="item.isLike === 1" icon="star"
               @click="likeHotel(item, index)"></u-button>
           </view>
+
+          <!-- 订单状态 -->
           <view v-else class="orderStatus">
             <u-text :text="activeIndex === 0 ? '预定中' : '已完成'" :color="activeIndex === 1 ? '#bbb' : '#36CFC9'"
               size="12"></u-text>
           </view>
+
           <image :src="baseUrl + item.img" mode="widthFix" />
+
+          <!-- 酒店信息 -->
           <view class="hotelContent">
+            <!-- 顶部酒店信息 -->
             <view>
               <u-text :text="item.name" bold color="#000"></u-text>
-              <u-text :text="'订单号：' + item.id" color="#aaa" size="12"></u-text>
+              <u-text v-if="activeIndex === 2" :text="item.address" color="#aaa" size="12"></u-text>
+              <u-text v-else :text="'订单号：' + item.id" color="#aaa" size="12"></u-text>
             </view>
+
+            <!-- 底部酒店信息 -->
             <view class="hotelContentBottom">
               <view>
                 <view style="display: flex;">
-                  <u-icon name="tags" color="#36CFC9"></u-icon>
-                  <u-text :text="item.type" color="#aaa" size="12" margin="10rpx"></u-text>
+                  <u-icon :name="activeIndex===2?'map':'tags'" color="#36CFC9"></u-icon>
+                   <u-text v-if="activeIndex ===2" :text="`距离${item.distance}km`" color="#aaa" size="12" margin="10rpx"></u-text>
+                  <u-text v-else :text="item.type" color="#aaa" size="12" margin="10rpx"></u-text>
                 </view>
                 <u-rate readonly v-model="item.rate" :count="5" active-color="#36CFC9"></u-rate>
               </view>
+
               <view v-if="activeIndex === 2">
                 <u-text :text="`￥${item.price}`" bold color="#000"></u-text>
                 <u-text text="/每晚" color="#000" size="12" align="center"></u-text>
               </view>
+
               <view v-else class="btn">
                 <u-text align="center" :text="`￥${item.price}`" bold color="#000"></u-text>
                 <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" size="mini"
@@ -136,14 +151,18 @@ const payOrder = async () => {
             </view>
           </view>
         </uni-card>
+
+        <!-- 支付弹层 -->
         <u-action-sheet title="支付" :show="show" @close="show = false" round="10">
           <view style="display: flex;width: 200rpx;margin: 25rpx auto;">
             <u-text align="center" text="￥" size="25" bold></u-text>
             <u-text align="center" :text="`${orderInfo.price}`" size="35" bold></u-text>
           </view>
+
           <up-cell style="padding:0 25rpx;" value="电子钱包" :border="false">
             <template #icon>付款方式</template>
           </up-cell>
+          
           <view style="padding:0 200rpx;">
             <up-button v-if="activeIndex === 0" text="支付" color="#36CFC9" @click="payOrder()"></up-button>
           </view>
@@ -188,7 +207,7 @@ const payOrder = async () => {
         transition: all .3s ease-out;
 
         text {
-          margin-right: 0.2px !important;
+          margin-right: 0 !important;
         }
       }
     }
