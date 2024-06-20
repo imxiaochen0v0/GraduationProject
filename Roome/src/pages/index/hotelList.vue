@@ -17,15 +17,21 @@ onLoad(async (options) => {
     hotelList.value = res.data
 })
 
+const to = async (e) => {
+    uni.navigateTo({
+        url: `/pages/index/hotelDetail?id=${e.id}&name=${e.name}`,
+
+    })
+}
 </script>
 
 <template>
-    <view>
+    <view class="container">
         <view class="hotelList">
-            <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder fixed></u-navbar>
+            <u-navbar :title="city.name" :autoBack="true" safeAreaInsetTop placeholder></u-navbar>
 
             <u-empty mode="favor" text="该城市暂无酒店" v-if="hotelList === undefined"></u-empty>
-            <uni-card padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
+            <uni-card @click="to(item)" padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
                 <image :src="baseUrl + item.img" mode="widthFix" />
                 <view class="hotelContent">
                     <view>
@@ -52,40 +58,44 @@ onLoad(async (options) => {
 </template>
 
 <style lang="scss" scoped>
-:deep(.u-empty) {
-    margin-top: 100rpx !important;
-}
+.container {
+    padding-bottom: env(safe-area-inset-bottom);
 
-.hotelList {
-    padding: 25rpx;
+    .hotelList {
+        padding: 25rpx;
 
-    :deep(.uni-card) {
-        height: 240rpx;
-        padding: 0rpx !important;
-        border-radius: 10px;
-
-        .uni-card__content {
-            display: flex;
-
-            image {
-                width: 40%;
-            }
-
-            .hotelContent {
-                padding: 10rpx 25rpx;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                width: 60%;
-
-                .hotelContentBottom {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-            }
+        :deep(.u-empty) {
+            margin-top: 100rpx !important;
         }
 
+        :deep(.uni-card) {
+            height: 240rpx;
+            padding: 0rpx !important;
+            border-radius: 10px;
+
+            .uni-card__content {
+                display: flex;
+
+                image {
+                    width: 40%;
+                }
+
+                .hotelContent {
+                    padding: 10rpx 25rpx;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    width: 60%;
+
+                    .hotelContentBottom {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                }
+            }
+
+        }
     }
 }
 </style>

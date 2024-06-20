@@ -2,11 +2,11 @@ const db = require('../db/index')
 
 // 获取酒店列表
 exports.getHotels = (req, res) => {
-  let sql = 'select * from hotel where isLike = ? or cheap = ? or city like ?'
+  let sql = 'select * from hotel where id = ? or isLike = ? or cheap = ? or city like ?'
   if (Object.keys(req.body).length === 0) {
     sql = 'select * from hotel'
   }
-  db.query(sql, [req.body.isLike, req.body.cheap, '%' + req.body.city + '%'], (err, result) => {
+  db.query(sql, [req.body.id, req.body.isLike, req.body.cheap, '%' + req.body.city + '%'], (err, result) => {
     if (err)
       return res.send({ code: 1, message: err.message })
     if (result.length === 0)
@@ -36,7 +36,7 @@ exports.likeHotel = (req, res) => {
 
 // 获取订单
 exports.getOrders = (req, res) => {
-  let sql = 'select * from hotelOrder where status = ?'
+  let sql = 'select * from hotelOrder where status = ? ORDER BY id DESC'
   db.query(sql, [req.body.status], (err, result) => {
     let data = []
     if (err)
@@ -57,6 +57,19 @@ exports.getOrders = (req, res) => {
     })
   })
 }
+
+// 添加预订订单
+exports.updateOrder = (req, res) => {
+  let sql = 'insert into hotelOrder set ?'
+  db.query(sql, req.body, (err, result) => {
+    if (err)
+      return res.send({ code: 1, message: err.message })
+    if ((result.affectedRows !== 1))
+      return res.send({ code: 0, message: '预订失败' })
+    res.send({ code: 0, message: '预订成功' })
+  })
+}
+
 
 // 获取城市列表
 exports.getCityList = (req, res) => {

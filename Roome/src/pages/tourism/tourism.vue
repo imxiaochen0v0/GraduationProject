@@ -113,13 +113,13 @@ const payOrder = async () => {
           <view class="hotelContent">
             <view>
               <u-text :text="item.name" bold color="#000"></u-text>
-              <u-text :text="item.address" color="#aaa" size="12"></u-text>
+              <u-text :text="'订单号：' + item.id" color="#aaa" size="12"></u-text>
             </view>
             <view class="hotelContentBottom">
               <view>
                 <view style="display: flex;">
-                  <u-icon name="map-fill" color="#36CFC9"></u-icon>
-                  <u-text :text="`距离${item.distance}km`" color="#aaa" size="12" margin="10rpx"></u-text>
+                  <u-icon name="tags" color="#36CFC9"></u-icon>
+                  <u-text :text="item.type" color="#aaa" size="12" margin="10rpx"></u-text>
                 </view>
                 <u-rate readonly v-model="item.rate" :count="5" active-color="#36CFC9"></u-rate>
               </view>
@@ -193,12 +193,10 @@ const payOrder = async () => {
       }
     }
 
-
-
     .orderStatus {
       z-index: 99;
       position: absolute;
-      left: 85%;
+      left: 87%;
       top: 5%;
     }
 
