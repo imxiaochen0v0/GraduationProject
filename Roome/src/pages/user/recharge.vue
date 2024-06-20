@@ -22,7 +22,7 @@ const open = (item) => {
         duration: 1000,
       })
     }
-    amount.value = amountTemp.value
+    amount.value = parseInt(amountTemp.value)
   }
   show.value = true
 }
