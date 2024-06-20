@@ -45,6 +45,11 @@ const to = (e) => {
 	})
 }
 
+const toHotel = (e) => {
+	uni.navigateTo({
+		url: `/pages/index/hotelDetail?id=${e.id}&name=${e.name}`,
+	})
+}
 
 // 搜索 
 const uToast = ref(null)
@@ -123,7 +128,7 @@ const search = async () => {
 			<view class="cheap">
 				<view class="cheapTitle">最实惠的价格</view>
 
-				<uni-card padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id">
+				<uni-card padding="0" margin="10" v-for="(item, index) in hotelList" :key="item.id" @click="toHotel(item)">
 					<image :src="baseUrl + item.img" mode="widthFix" />
 					<view class="hotelContent">
 						<view>
