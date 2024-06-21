@@ -10,7 +10,7 @@ exports.getHotels = (req, res) => {
     if (err)
       return res.send({ code: 1, message: err.message })
     if (result.length === 0)
-      return res.send({ code: 0, message: '暂无数据' })
+      return res.send({ code: 1, message: '暂无数据' })
     res.send({
       code: 0,
       message: '获取成功',
@@ -42,7 +42,7 @@ exports.getOrders = (req, res) => {
     if (err)
       return res.send({ code: 1, message: err.message })
     if (result.length === 0)
-      return res.send({ code: 0, message: '暂无数据' })
+      return res.send({ code: 1, message: '暂无数据' })
     sql = 'select id, name, img, rate, address, distance from hotel where id = ?'
     result.forEach(item => {
       db.query(sql, [item.hotel_id, item.status], (err, hotelResult) => {

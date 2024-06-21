@@ -81,8 +81,7 @@ const payOrder = async () => {
 
 const to = (e)=>{
   uni.navigateTo({
-    url: `/pages/index/hotelDetail?id=${e.hotel_id}&name=${e.name}`,
-
+    url: `/pages/index/hotelDetail?id=${e.hotel_id || e.id}&name=${e.name}`,
   })
 }
 </script>
