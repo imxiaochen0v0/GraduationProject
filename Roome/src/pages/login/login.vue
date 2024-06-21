@@ -9,7 +9,7 @@ const enroll = () => {
 }
 
 const userInfo = ref({
-  username: 'admin',
+  username: 'imxiaochen',
   password: '000000'
 })
 const uToastRef = ref(null)
